@@ -56,6 +56,3 @@ class Channel:
         """Выводит в консоль информацию о канале."""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
-
-# office = Channel('UC1eFXmJNkjITxPFWTy6RsWg')
-# print(office.to_json())

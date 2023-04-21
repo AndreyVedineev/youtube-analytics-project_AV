@@ -11,7 +11,6 @@ if __name__ == '__main__':
     # менять не можем
     office.channel_id = 'Новое название'
     # AttributeError: property 'channel_id' of 'Channel' object has no setter
-    print(office.channel_id)
 
     # можем получить объект для работы с API вне класса
     print(Channel.get_service())
