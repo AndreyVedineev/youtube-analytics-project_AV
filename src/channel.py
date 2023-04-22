@@ -34,6 +34,10 @@ class Channel:
     def channel_id(self):
         return self.__channel_id
 
+    def __str__(self):
+        # <название_канала> (<ссылка_на_канал>)
+        return f' <{self.title}> ({self.url})'
+
     def constructor(self):
         """Возвращает инфо по каналу"""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
@@ -56,3 +60,7 @@ class Channel:
         """Выводит в консоль информацию о канале."""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
+
+#
+# redactsiya = Channel('UC1eFXmJNkjITxPFWTy6RsWg')
+# print(redactsiya)
