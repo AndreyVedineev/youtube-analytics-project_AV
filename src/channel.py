@@ -61,6 +61,5 @@ class Channel:
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
-#
-# redactsiya = Channel('UC1eFXmJNkjITxPFWTy6RsWg')
-# print(redactsiya)
+# vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
+# print(vdud)
