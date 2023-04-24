@@ -96,7 +96,7 @@ class Channel:
         Операция сравнения «меньше или равно»
         """
 
-        return int(self.view_count) < int(other.view_count)
+        return int(self.view_count) <= int(other.view_count)
 
     def __str__(self):
         return f'{self.title}({self.url}'
