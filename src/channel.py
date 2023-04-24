@@ -34,6 +34,10 @@ class Channel:
     def channel_id(self):
         return self.__channel_id
 
+    def __str__(self):
+        # <название_канала> (<ссылка_на_канал>)
+        return f' <{self.title}> ({self.url})'
+
     def constructor(self):
         """Возвращает инфо по каналу"""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
@@ -56,3 +60,44 @@ class Channel:
         """Выводит в консоль информацию о канале."""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
+
+    def __add__(self, other):
+        """
+         Метод складывает подписчиков
+         """
+        return int(self.view_count) + int(other.view_count)
+
+    def __sub__(self, other):
+        """
+        Метод вычитает подписчиков
+        """
+        return int(self.view_count) - int(other.view_count)
+
+    def __gt__(self, other):
+        """
+        Операция сравнения «больше»
+        """
+        return int(self.view_count) > int(other.view_count)
+
+    def __ge__(self, other):
+        """
+        Операция сравнения «больше или равно »
+        """
+        return int(self.view_count) >= int(other.view_count)
+
+    def __lt__(self, other):
+        """
+        Операция сравнения «меньше»
+        """
+        return int(self.view_count) < int(other.view_count)
+
+    def __le__(self, other):
+        """
+        Операция сравнения «меньше или равно»
+        """
+
+        return int(self.view_count) < int(other.view_count)
+
+    def __str__(self):
+        return f'{self.title}({self.url}'
+
