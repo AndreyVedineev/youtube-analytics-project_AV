@@ -7,7 +7,6 @@ from googleapiclient.discovery import build
 
 load_dotenv()
 api_key = os.getenv('YT_API_KEY')
-channel_id = 'UCjWOzgG0oTFHy4N4BeDmBhg'
 
 
 class Video:
@@ -17,25 +16,24 @@ class Video:
 
     def __init__(self, video_id: str):
         self.video_id = video_id
-        self.channel_id = channel_id
-        # self.id_video = id_video  # id видео
-        # self.title = title  # название видео
-        # self.url = url  # ссылка на видео
-        # self.count_video = count_video  # количество просмотров
-        # self.count_like = count_like  # количество лайков
+        self.title = self.constructor()['items'][0]['snippet']['title']  # название видео
+        # self.url = self.constructor()['items'][0]['snippet']['thumbnails']['high']['url']  # ссылка нe на видео!!!!
+        # self.count_video = self.constructor()['items'][0]['statistics']['viewCount']  # количество просмотров
+        # self.count_like = self.constructor()['items'][0]['statistics']['likeCount']  # количество лайков
 
     def constructor(self):
         """
         Возвращает инфо по video
         """
         youtube = build('youtube', 'v3', developerKey=api_key)
-        playlists = youtube.playlists().list(channelId=self.channel_id,
-                                             part='contentDetails,snippet',
-                                             maxResults=50,
-                                             ).execute()
-
+        playlists = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                          id=self.video_id
+                                          ).execute()
 
         return playlists
+
+    # def __str__(self):
+    #     return self.title
 
 
 class PLVideo:
@@ -55,9 +53,6 @@ class PLVideo:
         pass
 
 
-video1 = Video('9lO06Zxhu88')  # '9lO06Zxhu88' - это id видео из ютуб
+video1 = Video('9lO06Zxhu88')
 
-# print(json.dumps(video1.constructor(), indent=2, ensure_ascii=False))
-for playlist in video1.constructor()['items']:
-    print(playlist)
-    print()
+print(json.dumps(video1.constructor()))
