@@ -34,15 +34,17 @@ class Video:
         return self.title
 
     def count_video(self):
-        return self.video_id
+        return self.count_video()
 
 
-class PLVideo():
+class PLVideo(Video):
     """
     Информация о видео в плейлисте
     """
 
     def __init__(self, video_id, playlist_id):
+
+
         self.video_id = video_id  # id видео
         self.playlist_id = playlist_id  # id плейлиста
         self.title = self.find_id_video()  # название видео
@@ -83,13 +85,3 @@ class PLVideo():
         """
         video = Video(self.video_id)
         return video.constructor()['items'][0]['statistics']['likeCount']
-
-
-video2 = PLVideo('BBotskuyw_M', 'PL7Ntiz7eTKwrqmApjln9u4ItzhDLRtPuD')
-
-# print(video2.find_id_video())
-# video1 = Video('9lO06Zxhu88')
-# print(json.dumps(video2.constructor(), ensure_ascii=False))
-# print(video1.title)
-# print(video2.count_video())
-# print(video2.count_like())
