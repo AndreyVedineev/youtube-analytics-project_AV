@@ -1,5 +1,5 @@
 import os
-
+from googleapiclient.errors import HttpError
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 
@@ -14,15 +14,24 @@ class Video:
 
     def __init__(self, video_id: str):
         self.video_id = video_id
-        self.title = self.constructor()['items'][0]['snippet']['title']  # название видео
-        self.url = self.constructor()['items'][0]['snippet']['thumbnails']['high']['url']  # ссылка нe на видео!!!!
-        self.count_video = self.constructor()['items'][0]['statistics']['viewCount']  # количество просмотров
-        self.count_like = self.constructor()['items'][0]['statistics']['likeCount']  # количество лайков
+        self.url = f"https://youtu.be/{self.video_id}"
+
+        if not self.constructor()['items']:
+            self.title = None
+            self.url = None
+            self.count_video = None
+            self.count_like = None
+        else:
+            self.title = self.constructor()['items'][0]['snippet']['title']  # название видео
+            self.url = f"https://youtu.be/{self.video_id}"  # ссылка на видео
+            self.count_video = self.constructor()['items'][0]['statistics']['viewCount']  # количество просмотров
+            self.count_like = self.constructor()['items'][0]['statistics']['likeCount']  # количество лайков
 
     def constructor(self):
         """
         Возвращает инфо по video
         """
+
         youtube = build('youtube', 'v3', developerKey=api_key)
         playlists = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                           id=self.video_id
@@ -43,7 +52,6 @@ class PLVideo(Video):
     """
 
     def __init__(self, video_id, playlist_id):
-
 
         self.video_id = video_id  # id видео
         self.playlist_id = playlist_id  # id плейлиста

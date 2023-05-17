@@ -5,6 +5,8 @@ import isodate
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 
+from src.video import Video
+
 load_dotenv()
 api_key = os.getenv('YT_API_KEY')
 
@@ -73,3 +75,4 @@ class PlayList:
         sorted_video_like = sorted(video_like.items(), key=lambda x: x[1], reverse=True)[0]
 
         return f"https://youtu.be/{sorted_video_like[0]}"
+
