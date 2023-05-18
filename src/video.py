@@ -1,10 +1,25 @@
 import os
-from googleapiclient.errors import HttpError
+
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 load_dotenv()
 api_key = os.getenv('YT_API_KEY')
+
+
+# class HttpError(Exception):
+#     """Класс исключения несуществующий id видео"""
+#
+#     def __init__(self, message, base_message=None):
+#         self.base_message = base_message
+#         self.message = message
+#
+#     def __str__(self):
+#         if self.base_message is None:
+#             return self.message
+#
+#         return f'{self.message} - {str(self.base_message)}'
 
 
 class Video:
@@ -36,6 +51,12 @@ class Video:
         playlists = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                           id=self.video_id
                                           ).execute()
+        try:
+            youtube = build('youtube', 'v3', developerKey=api_key)
+            video = youtube.captions().list(videoId=self.video_id, part='snippet').execute()
+
+        except HttpError:
+            print("_несуществующий id видео_")
 
         return playlists
 
